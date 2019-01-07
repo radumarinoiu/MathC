@@ -1,4 +1,4 @@
-yacc -d lfac.y
-lex -ll lfac.l
-gcc lex.yy.c y.tab.c -lfl -ly -o exe
-./exe test
+yacc -d mathc.y
+lex -ll mathc.l
+gcc lex.yy.c y.tab.c -lfl -ly -o mathc
+./mathc test
