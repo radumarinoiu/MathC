@@ -11,14 +11,13 @@
 "enddefines" { return end_defines;}
 "end" { return end_instr;}
 
+"STRUCT" { return STRUCT;}
+
 "INT" { return INTEGER;}
 "CHAR" { return CHR;}
 "FLOAT" { return FLOAT;}
 "BL" { return BOOL;}
 "CONST" { return CONST;}
-
-
-"STRUCT" { return STRUCT;}
 
 "PRINT" { return print;}
 "FOR" { return FOR;}
@@ -27,15 +26,16 @@
 "WHILE" { return WHILE;}
 "RETURN" { return RETURN;}
 
+[A-Za-z][a-zA-Z0-9_]* { yylval.nume=strdup(yytext); return ID;}
+
+([1-9][0-9]*)|0 { yylval.val=atoi(yytext); return INTEGER_VAL;}
 "TRUE"|"FALSE" { yylval.val=atoi(yytext); return BOOL_VAL;}
 \'[\^\-\\!@#$%^&*()+~`?=_{};:'"|/.,><a-zA-Z0-9]\' { yylval.val=yytext[1]; return CHR_VAL;}
-[0-9]+ { yylval.val=atoi(yytext); return INTEGER_VAL;}
 [0-9]*\.?[0-9]+ { yylval.val=atof(yytext); return FLOAT_VAL;}
 
 
-[A-Za-z][a-zA-Z0-9_]* { yylval.nume=strdup(yytext); return ID;}
-[A-Za-z][a-zA-Z0-9_]*\[[1-9][0-9]*\]\[[1-9][0-9]*\] {{ yylval.nume=strdup(yytext); return matr;}}
-[A-Za-z][a-zA-Z0-9_]*"["[0-9]*"]" {{ yylval.nume=strdup(yytext); return vect;}}
+[A-Za-z][a-zA-Z0-9_]*\[[1-9][0-9]*\]\[[1-9][0-9]*\] { yylval.nume=strdup(yytext); return matr;}
+[A-Za-z][a-zA-Z0-9_]*\[[1-9][0-9]*\] { yylval.nume=strdup(yytext); return vect;}
 
 
 

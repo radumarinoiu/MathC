@@ -238,6 +238,6 @@ printf("EROARE!: %s a aparut la linia:%d\n",s,yylineno);
 
 int main(int argc, char** argv){
     if(argc>0)
-yyin=fopen(argv[1],"r");
-yyparse();
+        yyin=fopen(argv[1],"r");
+    yyparse();
 } 

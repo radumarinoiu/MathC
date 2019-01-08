@@ -22,12 +22,12 @@ STRUCT Ma{
 INT Fa(INT asd){
     a=12;
 }
-INT b=5;
+INT b=0;
 
 enddefines
 
 a=4;
-IF(a<=5){
+IF(a>=5){
     b=40;
     a=4-1+b;
 }
