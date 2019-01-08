@@ -1,0 +1,3220 @@
+Terminals unused in grammar
+
+   CONST
+   verf
+   INCR
+   NOT
+
+
+Grammar
+
+    0 $accept: programul $end
+
+    1 programul: declaratii end_defines instructiuni
+
+    2 declaratii: start_decl declaratiile
+    3           | start_decl
+
+    4 declaratiile: concret_dec pnctvir
+    5             | fct_bloc
+    6             | struct_dec
+    7             | declaratiile concret_dec pnctvir
+    8             | declaratiile struct_dec
+    9             | declaratiile fct_bloc
+
+   10 struct_dec: struct struct_body struct_identif pnctvir
+
+   11 struct: STRUCT ID
+
+   12 struct_identif: ID
+   13               | vect
+   14               | matr
+   15               | struct_identif vir ID
+   16               | struct_identif vir vect
+   17               | struct_identif vir matr
+   18               | %empty
+
+   19 struct_body: sacoal declaratiile dacoal
+
+   20 fct_bloc: fct_dec fct_body
+
+   21 fct_body: sacoal statements dacoal
+   22         | pnctvir
+
+   23 fct_dec: fct sprnt arg_list dprnt
+
+   24 fct: INTEGER ID
+   25    | FLOAT ID
+   26    | CHR ID
+   27    | BOOL ID
+
+   28 concret_dec: INTEGER ID
+   29            | INTEGER ID ASSIGN INTEGER_VAL
+   30            | FLOAT ID
+   31            | FLOAT ID ASSIGN FLOAT_VAL
+   32            | CHR ID
+   33            | CHR ID ASSIGN CHR_VAL
+   34            | BOOL ID
+   35            | BOOL ID ASSIGN BOOL_VAL
+   36            | INTEGER matr
+   37            | FLOAT matr
+   38            | CHR matr
+   39            | BOOL matr
+   40            | INTEGER vect
+   41            | FLOAT vect
+   42            | CHR vect
+   43            | BOOL vect
+
+   44 arg_list: INTEGER ID
+   45         | FLOAT ID
+   46         | CHR ID
+   47         | BOOL ID
+   48         | INTEGER matr
+   49         | FLOAT matr
+   50         | CHR matr
+   51         | BOOL matr
+   52         | INTEGER vect
+   53         | FLOAT vect
+   54         | CHR vect
+   55         | BOOL vect
+   56         | arg_list vir INTEGER ID
+   57         | arg_list vir FLOAT ID
+   58         | arg_list vir CHR ID
+   59         | arg_list vir BOOL ID
+   60         | arg_list vir INTEGER matr
+   61         | arg_list vir FLOAT matr
+   62         | arg_list vir CHR matr
+   63         | arg_list vir BOOL matr
+   64         | arg_list vir INTEGER vect
+   65         | arg_list vir FLOAT vect
+   66         | arg_list vir CHR vect
+   67         | arg_list vir BOOL vect
+   68         | %empty
+
+   69 instructiuni: statements end_instr
+   70             | end_instr
+
+   71 statements: statements statement
+   72           | statement
+
+   73 statement: if_stat
+   74          | for_stat
+   75          | while_stat
+   76          | assign pnctvir
+   77          | val_struct pnctvir
+   78          | RETURN expr pnctvir
+   79          | PRINTEGER pnctvir
+   80          | function pnctvir
+
+   81 val_struct: ID pnct ID ASSIGN expr
+
+   82 PRINTEGER: print sprnt INTEGER vir expr dprnt
+   83          | print sprnt CHR vir expr dprnt
+   84          | print sprnt FLOAT vir expr dprnt
+   85          | print sprnt BOOL vir expr dprnt
+
+   86 function: ID sprnt argum dprnt
+
+   87 argum: expr
+   88      | argum vir expr
+   89      | %empty
+
+   90 if_stat: IF sprnt expr dprnt bloc_stat
+   91        | IF sprnt expr dprnt bloc_stat ELSE bloc_stat
+
+   92 for_stat: FOR sprnt assign vir expr vir assign dprnt bloc_stat
+
+   93 while_stat: WHILE sprnt expr dprnt bloc_stat
+
+   94 bloc_stat: statement
+   95          | sacoal statements dacoal
+
+   96 expr: expr pls expr
+   97     | expr min expr
+   98     | expr slsh expr
+   99     | expr ori expr
+  100     | expr mod expr
+  101     | expr EQ expr
+  102     | expr NEQ expr
+  103     | expr LEQ expr
+  104     | expr GEQ expr
+  105     | expr LES expr
+  106     | expr GRE expr
+  107     | expr AND expr
+  108     | expr OR expr
+  109     | sprnt expr dprnt
+  110     | expr3
+
+  111 expr3: ID
+  112      | sign ID
+  113      | ID pnct ID
+  114      | vect
+  115      | matr
+  116      | INTEGER_VAL
+  117      | FLOAT_VAL
+  118      | CHR_VAL
+  119      | BOOL_VAL
+
+  120 sign: min
+
+  121 assign: ID ASSIGN expr
+  122       | matr ASSIGN expr
+  123       | vect ASSIGN expr
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+IFX (258)
+ELSE (259) 91
+start_decl (260) 2 3
+INTEGER (261) 24 28 29 36 40 44 48 52 56 60 64 82
+CHR (262) 26 32 33 38 42 46 50 54 58 62 66 83
+FLOAT (263) 25 30 31 37 41 45 49 53 57 61 65 84
+BOOL (264) 27 34 35 39 43 47 51 55 59 63 67 85
+ID (265) 11 12 15 24 25 26 27 28 29 30 31 32 33 34 35 44 45 46 47 56
+    57 58 59 81 86 111 112 113 121
+vect (266) 13 16 40 41 42 43 52 53 54 55 64 65 66 67 114 123
+matr (267) 14 17 36 37 38 39 48 49 50 51 60 61 62 63 115 122
+STRUCT (268) 11
+CONST (269)
+pls (270) 96
+min (271) 97 120
+ori (272) 99
+slsh (273) 98
+verf (274)
+mod (275) 100
+ASSIGN (276) 29 31 33 35 81 121 122 123
+AND (277) 107
+OR (278) 108
+INCR (279)
+NOT (280)
+sprnt (281) 23 82 83 84 85 86 90 91 92 93 109
+dprnt (282) 23 82 83 84 85 86 90 91 92 93 109
+sacoal (283) 19 21 95
+dacoal (284) 19 21 95
+pnct (285) 81 113
+vir (286) 15 16 17 56 57 58 59 60 61 62 63 64 65 66 67 82 83 84 85
+    88 92
+pnctvir (287) 4 7 10 22 76 77 78 79 80
+end_defines (288) 1
+end_instr (289) 69 70
+IF (290) 90 91
+WHILE (291) 93
+FOR (292) 92
+RETURN (293) 78
+print (294) 82 83 84 85
+INTEGER_VAL (295) 29 116
+FLOAT_VAL (296) 31 117
+CHR_VAL (297) 33 118
+BOOL_VAL (298) 35 119
+EQ (299) 101
+NEQ (300) 102
+LEQ (301) 103
+GEQ (302) 104
+GRE (303) 106
+LES (304) 105
+
+
+Nonterminals, with rules where they appear
+
+$accept (50)
+    on left: 0
+programul (51)
+    on left: 1, on right: 0
+declaratii (52)
+    on left: 2 3, on right: 1
+declaratiile (53)
+    on left: 4 5 6 7 8 9, on right: 2 7 8 9 19
+struct_dec (54)
+    on left: 10, on right: 6 8
+struct (55)
+    on left: 11, on right: 10
+struct_identif (56)
+    on left: 12 13 14 15 16 17 18, on right: 10 15 16 17
+struct_body (57)
+    on left: 19, on right: 10
+fct_bloc (58)
+    on left: 20, on right: 5 9
+fct_body (59)
+    on left: 21 22, on right: 20
+fct_dec (60)
+    on left: 23, on right: 20
+fct (61)
+    on left: 24 25 26 27, on right: 23
+concret_dec (62)
+    on left: 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43, on right:
+    4 7
+arg_list (63)
+    on left: 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61
+    62 63 64 65 66 67 68, on right: 23 56 57 58 59 60 61 62 63 64 65
+    66 67
+instructiuni (64)
+    on left: 69 70, on right: 1
+statements (65)
+    on left: 71 72, on right: 21 69 71 95
+statement (66)
+    on left: 73 74 75 76 77 78 79 80, on right: 71 72 94
+val_struct (67)
+    on left: 81, on right: 77
+PRINTEGER (68)
+    on left: 82 83 84 85, on right: 79
+function (69)
+    on left: 86, on right: 80
+argum (70)
+    on left: 87 88 89, on right: 86 88
+if_stat (71)
+    on left: 90 91, on right: 73
+for_stat (72)
+    on left: 92, on right: 74
+while_stat (73)
+    on left: 93, on right: 75
+bloc_stat (74)
+    on left: 94 95, on right: 90 91 92 93
+expr (75)
+    on left: 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110,
+    on right: 78 81 82 83 84 85 87 88 90 91 92 93 96 97 98 99 100 101
+    102 103 104 105 106 107 108 109 121 122 123
+expr3 (76)
+    on left: 111 112 113 114 115 116 117 118 119, on right: 110
+sign (77)
+    on left: 120, on right: 112
+assign (78)
+    on left: 121 122 123, on right: 76 92
+
+
+State 0
+
+    0 $accept: . programul $end
+
+    start_decl  shift, and go to state 1
+
+    programul   go to state 2
+    declaratii  go to state 3
+
+
+State 1
+
+    2 declaratii: start_decl . declaratiile
+    3           | start_decl .
+
+    INTEGER  shift, and go to state 4
+    CHR      shift, and go to state 5
+    FLOAT    shift, and go to state 6
+    BOOL     shift, and go to state 7
+    STRUCT   shift, and go to state 8
+
+    $default  reduce using rule 3 (declaratii)
+
+    declaratiile  go to state 9
+    struct_dec    go to state 10
+    struct        go to state 11
+    fct_bloc      go to state 12
+    fct_dec       go to state 13
+    fct           go to state 14
+    concret_dec   go to state 15
+
+
+State 2
+
+    0 $accept: programul . $end
+
+    $end  shift, and go to state 16
+
+
+State 3
+
+    1 programul: declaratii . end_defines instructiuni
+
+    end_defines  shift, and go to state 17
+
+
+State 4
+
+   24 fct: INTEGER . ID
+   28 concret_dec: INTEGER . ID
+   29            | INTEGER . ID ASSIGN INTEGER_VAL
+   36            | INTEGER . matr
+   40            | INTEGER . vect
+
+    ID    shift, and go to state 18
+    vect  shift, and go to state 19
+    matr  shift, and go to state 20
+
+
+State 5
+
+   26 fct: CHR . ID
+   32 concret_dec: CHR . ID
+   33            | CHR . ID ASSIGN CHR_VAL
+   38            | CHR . matr
+   42            | CHR . vect
+
+    ID    shift, and go to state 21
+    vect  shift, and go to state 22
+    matr  shift, and go to state 23
+
+
+State 6
+
+   25 fct: FLOAT . ID
+   30 concret_dec: FLOAT . ID
+   31            | FLOAT . ID ASSIGN FLOAT_VAL
+   37            | FLOAT . matr
+   41            | FLOAT . vect
+
+    ID    shift, and go to state 24
+    vect  shift, and go to state 25
+    matr  shift, and go to state 26
+
+
+State 7
+
+   27 fct: BOOL . ID
+   34 concret_dec: BOOL . ID
+   35            | BOOL . ID ASSIGN BOOL_VAL
+   39            | BOOL . matr
+   43            | BOOL . vect
+
+    ID    shift, and go to state 27
+    vect  shift, and go to state 28
+    matr  shift, and go to state 29
+
+
+State 8
+
+   11 struct: STRUCT . ID
+
+    ID  shift, and go to state 30
+
+
+State 9
+
+    2 declaratii: start_decl declaratiile .
+    7 declaratiile: declaratiile . concret_dec pnctvir
+    8             | declaratiile . struct_dec
+    9             | declaratiile . fct_bloc
+
+    INTEGER  shift, and go to state 4
+    CHR      shift, and go to state 5
+    FLOAT    shift, and go to state 6
+    BOOL     shift, and go to state 7
+    STRUCT   shift, and go to state 8
+
+    $default  reduce using rule 2 (declaratii)
+
+    struct_dec   go to state 31
+    struct       go to state 11
+    fct_bloc     go to state 32
+    fct_dec      go to state 13
+    fct          go to state 14
+    concret_dec  go to state 33
+
+
+State 10
+
+    6 declaratiile: struct_dec .
+
+    $default  reduce using rule 6 (declaratiile)
+
+
+State 11
+
+   10 struct_dec: struct . struct_body struct_identif pnctvir
+
+    sacoal  shift, and go to state 34
+
+    struct_body  go to state 35
+
+
+State 12
+
+    5 declaratiile: fct_bloc .
+
+    $default  reduce using rule 5 (declaratiile)
+
+
+State 13
+
+   20 fct_bloc: fct_dec . fct_body
+
+    sacoal   shift, and go to state 36
+    pnctvir  shift, and go to state 37
+
+    fct_body  go to state 38
+
+
+State 14
+
+   23 fct_dec: fct . sprnt arg_list dprnt
+
+    sprnt  shift, and go to state 39
+
+
+State 15
+
+    4 declaratiile: concret_dec . pnctvir
+
+    pnctvir  shift, and go to state 40
+
+
+State 16
+
+    0 $accept: programul $end .
+
+    $default  accept
+
+
+State 17
+
+    1 programul: declaratii end_defines . instructiuni
+
+    ID         shift, and go to state 41
+    vect       shift, and go to state 42
+    matr       shift, and go to state 43
+    end_instr  shift, and go to state 44
+    IF         shift, and go to state 45
+    WHILE      shift, and go to state 46
+    FOR        shift, and go to state 47
+    RETURN     shift, and go to state 48
+    print      shift, and go to state 49
+
+    instructiuni  go to state 50
+    statements    go to state 51
+    statement     go to state 52
+    val_struct    go to state 53
+    PRINTEGER     go to state 54
+    function      go to state 55
+    if_stat       go to state 56
+    for_stat      go to state 57
+    while_stat    go to state 58
+    assign        go to state 59
+
+
+State 18
+
+   24 fct: INTEGER ID .
+   28 concret_dec: INTEGER ID .
+   29            | INTEGER ID . ASSIGN INTEGER_VAL
+
+    ASSIGN  shift, and go to state 60
+
+    pnctvir   reduce using rule 28 (concret_dec)
+    $default  reduce using rule 24 (fct)
+
+
+State 19
+
+   40 concret_dec: INTEGER vect .
+
+    $default  reduce using rule 40 (concret_dec)
+
+
+State 20
+
+   36 concret_dec: INTEGER matr .
+
+    $default  reduce using rule 36 (concret_dec)
+
+
+State 21
+
+   26 fct: CHR ID .
+   32 concret_dec: CHR ID .
+   33            | CHR ID . ASSIGN CHR_VAL
+
+    ASSIGN  shift, and go to state 61
+
+    pnctvir   reduce using rule 32 (concret_dec)
+    $default  reduce using rule 26 (fct)
+
+
+State 22
+
+   42 concret_dec: CHR vect .
+
+    $default  reduce using rule 42 (concret_dec)
+
+
+State 23
+
+   38 concret_dec: CHR matr .
+
+    $default  reduce using rule 38 (concret_dec)
+
+
+State 24
+
+   25 fct: FLOAT ID .
+   30 concret_dec: FLOAT ID .
+   31            | FLOAT ID . ASSIGN FLOAT_VAL
+
+    ASSIGN  shift, and go to state 62
+
+    pnctvir   reduce using rule 30 (concret_dec)
+    $default  reduce using rule 25 (fct)
+
+
+State 25
+
+   41 concret_dec: FLOAT vect .
+
+    $default  reduce using rule 41 (concret_dec)
+
+
+State 26
+
+   37 concret_dec: FLOAT matr .
+
+    $default  reduce using rule 37 (concret_dec)
+
+
+State 27
+
+   27 fct: BOOL ID .
+   34 concret_dec: BOOL ID .
+   35            | BOOL ID . ASSIGN BOOL_VAL
+
+    ASSIGN  shift, and go to state 63
+
+    pnctvir   reduce using rule 34 (concret_dec)
+    $default  reduce using rule 27 (fct)
+
+
+State 28
+
+   43 concret_dec: BOOL vect .
+
+    $default  reduce using rule 43 (concret_dec)
+
+
+State 29
+
+   39 concret_dec: BOOL matr .
+
+    $default  reduce using rule 39 (concret_dec)
+
+
+State 30
+
+   11 struct: STRUCT ID .
+
+    $default  reduce using rule 11 (struct)
+
+
+State 31
+
+    8 declaratiile: declaratiile struct_dec .
+
+    $default  reduce using rule 8 (declaratiile)
+
+
+State 32
+
+    9 declaratiile: declaratiile fct_bloc .
+
+    $default  reduce using rule 9 (declaratiile)
+
+
+State 33
+
+    7 declaratiile: declaratiile concret_dec . pnctvir
+
+    pnctvir  shift, and go to state 64
+
+
+State 34
+
+   19 struct_body: sacoal . declaratiile dacoal
+
+    INTEGER  shift, and go to state 4
+    CHR      shift, and go to state 5
+    FLOAT    shift, and go to state 6
+    BOOL     shift, and go to state 7
+    STRUCT   shift, and go to state 8
+
+    declaratiile  go to state 65
+    struct_dec    go to state 10
+    struct        go to state 11
+    fct_bloc      go to state 12
+    fct_dec       go to state 13
+    fct           go to state 14
+    concret_dec   go to state 15
+
+
+State 35
+
+   10 struct_dec: struct struct_body . struct_identif pnctvir
+
+    ID    shift, and go to state 66
+    vect  shift, and go to state 67
+    matr  shift, and go to state 68
+
+    $default  reduce using rule 18 (struct_identif)
+
+    struct_identif  go to state 69
+
+
+State 36
+
+   21 fct_body: sacoal . statements dacoal
+
+    ID      shift, and go to state 41
+    vect    shift, and go to state 42
+    matr    shift, and go to state 43
+    IF      shift, and go to state 45
+    WHILE   shift, and go to state 46
+    FOR     shift, and go to state 47
+    RETURN  shift, and go to state 48
+    print   shift, and go to state 49
+
+    statements  go to state 70
+    statement   go to state 52
+    val_struct  go to state 53
+    PRINTEGER   go to state 54
+    function    go to state 55
+    if_stat     go to state 56
+    for_stat    go to state 57
+    while_stat  go to state 58
+    assign      go to state 59
+
+
+State 37
+
+   22 fct_body: pnctvir .
+
+    $default  reduce using rule 22 (fct_body)
+
+
+State 38
+
+   20 fct_bloc: fct_dec fct_body .
+
+    $default  reduce using rule 20 (fct_bloc)
+
+
+State 39
+
+   23 fct_dec: fct sprnt . arg_list dprnt
+
+    INTEGER  shift, and go to state 71
+    CHR      shift, and go to state 72
+    FLOAT    shift, and go to state 73
+    BOOL     shift, and go to state 74
+
+    $default  reduce using rule 68 (arg_list)
+
+    arg_list  go to state 75
+
+
+State 40
+
+    4 declaratiile: concret_dec pnctvir .
+
+    $default  reduce using rule 4 (declaratiile)
+
+
+State 41
+
+   81 val_struct: ID . pnct ID ASSIGN expr
+   86 function: ID . sprnt argum dprnt
+  121 assign: ID . ASSIGN expr
+
+    ASSIGN  shift, and go to state 76
+    sprnt   shift, and go to state 77
+    pnct    shift, and go to state 78
+
+
+State 42
+
+  123 assign: vect . ASSIGN expr
+
+    ASSIGN  shift, and go to state 79
+
+
+State 43
+
+  122 assign: matr . ASSIGN expr
+
+    ASSIGN  shift, and go to state 80
+
+
+State 44
+
+   70 instructiuni: end_instr .
+
+    $default  reduce using rule 70 (instructiuni)
+
+
+State 45
+
+   90 if_stat: IF . sprnt expr dprnt bloc_stat
+   91        | IF . sprnt expr dprnt bloc_stat ELSE bloc_stat
+
+    sprnt  shift, and go to state 81
+
+
+State 46
+
+   93 while_stat: WHILE . sprnt expr dprnt bloc_stat
+
+    sprnt  shift, and go to state 82
+
+
+State 47
+
+   92 for_stat: FOR . sprnt assign vir expr vir assign dprnt bloc_stat
+
+    sprnt  shift, and go to state 83
+
+
+State 48
+
+   78 statement: RETURN . expr pnctvir
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 93
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 49
+
+   82 PRINTEGER: print . sprnt INTEGER vir expr dprnt
+   83          | print . sprnt CHR vir expr dprnt
+   84          | print . sprnt FLOAT vir expr dprnt
+   85          | print . sprnt BOOL vir expr dprnt
+
+    sprnt  shift, and go to state 96
+
+
+State 50
+
+    1 programul: declaratii end_defines instructiuni .
+
+    $default  reduce using rule 1 (programul)
+
+
+State 51
+
+   69 instructiuni: statements . end_instr
+   71 statements: statements . statement
+
+    ID         shift, and go to state 41
+    vect       shift, and go to state 42
+    matr       shift, and go to state 43
+    end_instr  shift, and go to state 97
+    IF         shift, and go to state 45
+    WHILE      shift, and go to state 46
+    FOR        shift, and go to state 47
+    RETURN     shift, and go to state 48
+    print      shift, and go to state 49
+
+    statement   go to state 98
+    val_struct  go to state 53
+    PRINTEGER   go to state 54
+    function    go to state 55
+    if_stat     go to state 56
+    for_stat    go to state 57
+    while_stat  go to state 58
+    assign      go to state 59
+
+
+State 52
+
+   72 statements: statement .
+
+    $default  reduce using rule 72 (statements)
+
+
+State 53
+
+   77 statement: val_struct . pnctvir
+
+    pnctvir  shift, and go to state 99
+
+
+State 54
+
+   79 statement: PRINTEGER . pnctvir
+
+    pnctvir  shift, and go to state 100
+
+
+State 55
+
+   80 statement: function . pnctvir
+
+    pnctvir  shift, and go to state 101
+
+
+State 56
+
+   73 statement: if_stat .
+
+    $default  reduce using rule 73 (statement)
+
+
+State 57
+
+   74 statement: for_stat .
+
+    $default  reduce using rule 74 (statement)
+
+
+State 58
+
+   75 statement: while_stat .
+
+    $default  reduce using rule 75 (statement)
+
+
+State 59
+
+   76 statement: assign . pnctvir
+
+    pnctvir  shift, and go to state 102
+
+
+State 60
+
+   29 concret_dec: INTEGER ID ASSIGN . INTEGER_VAL
+
+    INTEGER_VAL  shift, and go to state 103
+
+
+State 61
+
+   33 concret_dec: CHR ID ASSIGN . CHR_VAL
+
+    CHR_VAL  shift, and go to state 104
+
+
+State 62
+
+   31 concret_dec: FLOAT ID ASSIGN . FLOAT_VAL
+
+    FLOAT_VAL  shift, and go to state 105
+
+
+State 63
+
+   35 concret_dec: BOOL ID ASSIGN . BOOL_VAL
+
+    BOOL_VAL  shift, and go to state 106
+
+
+State 64
+
+    7 declaratiile: declaratiile concret_dec pnctvir .
+
+    $default  reduce using rule 7 (declaratiile)
+
+
+State 65
+
+    7 declaratiile: declaratiile . concret_dec pnctvir
+    8             | declaratiile . struct_dec
+    9             | declaratiile . fct_bloc
+   19 struct_body: sacoal declaratiile . dacoal
+
+    INTEGER  shift, and go to state 4
+    CHR      shift, and go to state 5
+    FLOAT    shift, and go to state 6
+    BOOL     shift, and go to state 7
+    STRUCT   shift, and go to state 8
+    dacoal   shift, and go to state 107
+
+    struct_dec   go to state 31
+    struct       go to state 11
+    fct_bloc     go to state 32
+    fct_dec      go to state 13
+    fct          go to state 14
+    concret_dec  go to state 33
+
+
+State 66
+
+   12 struct_identif: ID .
+
+    $default  reduce using rule 12 (struct_identif)
+
+
+State 67
+
+   13 struct_identif: vect .
+
+    $default  reduce using rule 13 (struct_identif)
+
+
+State 68
+
+   14 struct_identif: matr .
+
+    $default  reduce using rule 14 (struct_identif)
+
+
+State 69
+
+   10 struct_dec: struct struct_body struct_identif . pnctvir
+   15 struct_identif: struct_identif . vir ID
+   16               | struct_identif . vir vect
+   17               | struct_identif . vir matr
+
+    vir      shift, and go to state 108
+    pnctvir  shift, and go to state 109
+
+
+State 70
+
+   21 fct_body: sacoal statements . dacoal
+   71 statements: statements . statement
+
+    ID      shift, and go to state 41
+    vect    shift, and go to state 42
+    matr    shift, and go to state 43
+    dacoal  shift, and go to state 110
+    IF      shift, and go to state 45
+    WHILE   shift, and go to state 46
+    FOR     shift, and go to state 47
+    RETURN  shift, and go to state 48
+    print   shift, and go to state 49
+
+    statement   go to state 98
+    val_struct  go to state 53
+    PRINTEGER   go to state 54
+    function    go to state 55
+    if_stat     go to state 56
+    for_stat    go to state 57
+    while_stat  go to state 58
+    assign      go to state 59
+
+
+State 71
+
+   44 arg_list: INTEGER . ID
+   48         | INTEGER . matr
+   52         | INTEGER . vect
+
+    ID    shift, and go to state 111
+    vect  shift, and go to state 112
+    matr  shift, and go to state 113
+
+
+State 72
+
+   46 arg_list: CHR . ID
+   50         | CHR . matr
+   54         | CHR . vect
+
+    ID    shift, and go to state 114
+    vect  shift, and go to state 115
+    matr  shift, and go to state 116
+
+
+State 73
+
+   45 arg_list: FLOAT . ID
+   49         | FLOAT . matr
+   53         | FLOAT . vect
+
+    ID    shift, and go to state 117
+    vect  shift, and go to state 118
+    matr  shift, and go to state 119
+
+
+State 74
+
+   47 arg_list: BOOL . ID
+   51         | BOOL . matr
+   55         | BOOL . vect
+
+    ID    shift, and go to state 120
+    vect  shift, and go to state 121
+    matr  shift, and go to state 122
+
+
+State 75
+
+   23 fct_dec: fct sprnt arg_list . dprnt
+   56 arg_list: arg_list . vir INTEGER ID
+   57         | arg_list . vir FLOAT ID
+   58         | arg_list . vir CHR ID
+   59         | arg_list . vir BOOL ID
+   60         | arg_list . vir INTEGER matr
+   61         | arg_list . vir FLOAT matr
+   62         | arg_list . vir CHR matr
+   63         | arg_list . vir BOOL matr
+   64         | arg_list . vir INTEGER vect
+   65         | arg_list . vir FLOAT vect
+   66         | arg_list . vir CHR vect
+   67         | arg_list . vir BOOL vect
+
+    dprnt  shift, and go to state 123
+    vir    shift, and go to state 124
+
+
+State 76
+
+  121 assign: ID ASSIGN . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 125
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 77
+
+   86 function: ID sprnt . argum dprnt
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    $default  reduce using rule 89 (argum)
+
+    argum  go to state 126
+    expr   go to state 127
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 78
+
+   81 val_struct: ID pnct . ID ASSIGN expr
+
+    ID  shift, and go to state 128
+
+
+State 79
+
+  123 assign: vect ASSIGN . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 129
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 80
+
+  122 assign: matr ASSIGN . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 130
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 81
+
+   90 if_stat: IF sprnt . expr dprnt bloc_stat
+   91        | IF sprnt . expr dprnt bloc_stat ELSE bloc_stat
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 131
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 82
+
+   93 while_stat: WHILE sprnt . expr dprnt bloc_stat
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 132
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 83
+
+   92 for_stat: FOR sprnt . assign vir expr vir assign dprnt bloc_stat
+
+    ID    shift, and go to state 133
+    vect  shift, and go to state 42
+    matr  shift, and go to state 43
+
+    assign  go to state 134
+
+
+State 84
+
+  111 expr3: ID .
+  113      | ID . pnct ID
+
+    pnct  shift, and go to state 135
+
+    $default  reduce using rule 111 (expr3)
+
+
+State 85
+
+  114 expr3: vect .
+
+    $default  reduce using rule 114 (expr3)
+
+
+State 86
+
+  115 expr3: matr .
+
+    $default  reduce using rule 115 (expr3)
+
+
+State 87
+
+  120 sign: min .
+
+    $default  reduce using rule 120 (sign)
+
+
+State 88
+
+  109 expr: sprnt . expr dprnt
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 136
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 89
+
+  116 expr3: INTEGER_VAL .
+
+    $default  reduce using rule 116 (expr3)
+
+
+State 90
+
+  117 expr3: FLOAT_VAL .
+
+    $default  reduce using rule 117 (expr3)
+
+
+State 91
+
+  118 expr3: CHR_VAL .
+
+    $default  reduce using rule 118 (expr3)
+
+
+State 92
+
+  119 expr3: BOOL_VAL .
+
+    $default  reduce using rule 119 (expr3)
+
+
+State 93
+
+   78 statement: RETURN expr . pnctvir
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    pls      shift, and go to state 137
+    min      shift, and go to state 138
+    ori      shift, and go to state 139
+    slsh     shift, and go to state 140
+    mod      shift, and go to state 141
+    AND      shift, and go to state 142
+    OR       shift, and go to state 143
+    pnctvir  shift, and go to state 144
+    EQ       shift, and go to state 145
+    NEQ      shift, and go to state 146
+    LEQ      shift, and go to state 147
+    GEQ      shift, and go to state 148
+    GRE      shift, and go to state 149
+    LES      shift, and go to state 150
+
+
+State 94
+
+  110 expr: expr3 .
+
+    $default  reduce using rule 110 (expr)
+
+
+State 95
+
+  112 expr3: sign . ID
+
+    ID  shift, and go to state 151
+
+
+State 96
+
+   82 PRINTEGER: print sprnt . INTEGER vir expr dprnt
+   83          | print sprnt . CHR vir expr dprnt
+   84          | print sprnt . FLOAT vir expr dprnt
+   85          | print sprnt . BOOL vir expr dprnt
+
+    INTEGER  shift, and go to state 152
+    CHR      shift, and go to state 153
+    FLOAT    shift, and go to state 154
+    BOOL     shift, and go to state 155
+
+
+State 97
+
+   69 instructiuni: statements end_instr .
+
+    $default  reduce using rule 69 (instructiuni)
+
+
+State 98
+
+   71 statements: statements statement .
+
+    $default  reduce using rule 71 (statements)
+
+
+State 99
+
+   77 statement: val_struct pnctvir .
+
+    $default  reduce using rule 77 (statement)
+
+
+State 100
+
+   79 statement: PRINTEGER pnctvir .
+
+    $default  reduce using rule 79 (statement)
+
+
+State 101
+
+   80 statement: function pnctvir .
+
+    $default  reduce using rule 80 (statement)
+
+
+State 102
+
+   76 statement: assign pnctvir .
+
+    $default  reduce using rule 76 (statement)
+
+
+State 103
+
+   29 concret_dec: INTEGER ID ASSIGN INTEGER_VAL .
+
+    $default  reduce using rule 29 (concret_dec)
+
+
+State 104
+
+   33 concret_dec: CHR ID ASSIGN CHR_VAL .
+
+    $default  reduce using rule 33 (concret_dec)
+
+
+State 105
+
+   31 concret_dec: FLOAT ID ASSIGN FLOAT_VAL .
+
+    $default  reduce using rule 31 (concret_dec)
+
+
+State 106
+
+   35 concret_dec: BOOL ID ASSIGN BOOL_VAL .
+
+    $default  reduce using rule 35 (concret_dec)
+
+
+State 107
+
+   19 struct_body: sacoal declaratiile dacoal .
+
+    $default  reduce using rule 19 (struct_body)
+
+
+State 108
+
+   15 struct_identif: struct_identif vir . ID
+   16               | struct_identif vir . vect
+   17               | struct_identif vir . matr
+
+    ID    shift, and go to state 156
+    vect  shift, and go to state 157
+    matr  shift, and go to state 158
+
+
+State 109
+
+   10 struct_dec: struct struct_body struct_identif pnctvir .
+
+    $default  reduce using rule 10 (struct_dec)
+
+
+State 110
+
+   21 fct_body: sacoal statements dacoal .
+
+    $default  reduce using rule 21 (fct_body)
+
+
+State 111
+
+   44 arg_list: INTEGER ID .
+
+    $default  reduce using rule 44 (arg_list)
+
+
+State 112
+
+   52 arg_list: INTEGER vect .
+
+    $default  reduce using rule 52 (arg_list)
+
+
+State 113
+
+   48 arg_list: INTEGER matr .
+
+    $default  reduce using rule 48 (arg_list)
+
+
+State 114
+
+   46 arg_list: CHR ID .
+
+    $default  reduce using rule 46 (arg_list)
+
+
+State 115
+
+   54 arg_list: CHR vect .
+
+    $default  reduce using rule 54 (arg_list)
+
+
+State 116
+
+   50 arg_list: CHR matr .
+
+    $default  reduce using rule 50 (arg_list)
+
+
+State 117
+
+   45 arg_list: FLOAT ID .
+
+    $default  reduce using rule 45 (arg_list)
+
+
+State 118
+
+   53 arg_list: FLOAT vect .
+
+    $default  reduce using rule 53 (arg_list)
+
+
+State 119
+
+   49 arg_list: FLOAT matr .
+
+    $default  reduce using rule 49 (arg_list)
+
+
+State 120
+
+   47 arg_list: BOOL ID .
+
+    $default  reduce using rule 47 (arg_list)
+
+
+State 121
+
+   55 arg_list: BOOL vect .
+
+    $default  reduce using rule 55 (arg_list)
+
+
+State 122
+
+   51 arg_list: BOOL matr .
+
+    $default  reduce using rule 51 (arg_list)
+
+
+State 123
+
+   23 fct_dec: fct sprnt arg_list dprnt .
+
+    $default  reduce using rule 23 (fct_dec)
+
+
+State 124
+
+   56 arg_list: arg_list vir . INTEGER ID
+   57         | arg_list vir . FLOAT ID
+   58         | arg_list vir . CHR ID
+   59         | arg_list vir . BOOL ID
+   60         | arg_list vir . INTEGER matr
+   61         | arg_list vir . FLOAT matr
+   62         | arg_list vir . CHR matr
+   63         | arg_list vir . BOOL matr
+   64         | arg_list vir . INTEGER vect
+   65         | arg_list vir . FLOAT vect
+   66         | arg_list vir . CHR vect
+   67         | arg_list vir . BOOL vect
+
+    INTEGER  shift, and go to state 159
+    CHR      shift, and go to state 160
+    FLOAT    shift, and go to state 161
+    BOOL     shift, and go to state 162
+
+
+State 125
+
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+  121 assign: ID ASSIGN expr .
+
+    pls   shift, and go to state 137
+    min   shift, and go to state 138
+    ori   shift, and go to state 139
+    slsh  shift, and go to state 140
+    mod   shift, and go to state 141
+    AND   shift, and go to state 142
+    OR    shift, and go to state 143
+    EQ    shift, and go to state 145
+    NEQ   shift, and go to state 146
+    LEQ   shift, and go to state 147
+    GEQ   shift, and go to state 148
+    GRE   shift, and go to state 149
+    LES   shift, and go to state 150
+
+    $default  reduce using rule 121 (assign)
+
+
+State 126
+
+   86 function: ID sprnt argum . dprnt
+   88 argum: argum . vir expr
+
+    dprnt  shift, and go to state 163
+    vir    shift, and go to state 164
+
+
+State 127
+
+   87 argum: expr .
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    pls   shift, and go to state 137
+    min   shift, and go to state 138
+    ori   shift, and go to state 139
+    slsh  shift, and go to state 140
+    mod   shift, and go to state 141
+    AND   shift, and go to state 142
+    OR    shift, and go to state 143
+    EQ    shift, and go to state 145
+    NEQ   shift, and go to state 146
+    LEQ   shift, and go to state 147
+    GEQ   shift, and go to state 148
+    GRE   shift, and go to state 149
+    LES   shift, and go to state 150
+
+    $default  reduce using rule 87 (argum)
+
+
+State 128
+
+   81 val_struct: ID pnct ID . ASSIGN expr
+
+    ASSIGN  shift, and go to state 165
+
+
+State 129
+
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+  123 assign: vect ASSIGN expr .
+
+    pls   shift, and go to state 137
+    min   shift, and go to state 138
+    ori   shift, and go to state 139
+    slsh  shift, and go to state 140
+    mod   shift, and go to state 141
+    AND   shift, and go to state 142
+    OR    shift, and go to state 143
+    EQ    shift, and go to state 145
+    NEQ   shift, and go to state 146
+    LEQ   shift, and go to state 147
+    GEQ   shift, and go to state 148
+    GRE   shift, and go to state 149
+    LES   shift, and go to state 150
+
+    $default  reduce using rule 123 (assign)
+
+
+State 130
+
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+  122 assign: matr ASSIGN expr .
+
+    pls   shift, and go to state 137
+    min   shift, and go to state 138
+    ori   shift, and go to state 139
+    slsh  shift, and go to state 140
+    mod   shift, and go to state 141
+    AND   shift, and go to state 142
+    OR    shift, and go to state 143
+    EQ    shift, and go to state 145
+    NEQ   shift, and go to state 146
+    LEQ   shift, and go to state 147
+    GEQ   shift, and go to state 148
+    GRE   shift, and go to state 149
+    LES   shift, and go to state 150
+
+    $default  reduce using rule 122 (assign)
+
+
+State 131
+
+   90 if_stat: IF sprnt expr . dprnt bloc_stat
+   91        | IF sprnt expr . dprnt bloc_stat ELSE bloc_stat
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    pls    shift, and go to state 137
+    min    shift, and go to state 138
+    ori    shift, and go to state 139
+    slsh   shift, and go to state 140
+    mod    shift, and go to state 141
+    AND    shift, and go to state 142
+    OR     shift, and go to state 143
+    dprnt  shift, and go to state 166
+    EQ     shift, and go to state 145
+    NEQ    shift, and go to state 146
+    LEQ    shift, and go to state 147
+    GEQ    shift, and go to state 148
+    GRE    shift, and go to state 149
+    LES    shift, and go to state 150
+
+
+State 132
+
+   93 while_stat: WHILE sprnt expr . dprnt bloc_stat
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    pls    shift, and go to state 137
+    min    shift, and go to state 138
+    ori    shift, and go to state 139
+    slsh   shift, and go to state 140
+    mod    shift, and go to state 141
+    AND    shift, and go to state 142
+    OR     shift, and go to state 143
+    dprnt  shift, and go to state 167
+    EQ     shift, and go to state 145
+    NEQ    shift, and go to state 146
+    LEQ    shift, and go to state 147
+    GEQ    shift, and go to state 148
+    GRE    shift, and go to state 149
+    LES    shift, and go to state 150
+
+
+State 133
+
+  121 assign: ID . ASSIGN expr
+
+    ASSIGN  shift, and go to state 76
+
+
+State 134
+
+   92 for_stat: FOR sprnt assign . vir expr vir assign dprnt bloc_stat
+
+    vir  shift, and go to state 168
+
+
+State 135
+
+  113 expr3: ID pnct . ID
+
+    ID  shift, and go to state 169
+
+
+State 136
+
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+  109     | sprnt expr . dprnt
+
+    pls    shift, and go to state 137
+    min    shift, and go to state 138
+    ori    shift, and go to state 139
+    slsh   shift, and go to state 140
+    mod    shift, and go to state 141
+    AND    shift, and go to state 142
+    OR     shift, and go to state 143
+    dprnt  shift, and go to state 170
+    EQ     shift, and go to state 145
+    NEQ    shift, and go to state 146
+    LEQ    shift, and go to state 147
+    GEQ    shift, and go to state 148
+    GRE    shift, and go to state 149
+    LES    shift, and go to state 150
+
+
+State 137
+
+   96 expr: expr pls . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 171
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 138
+
+   97 expr: expr min . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 172
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 139
+
+   99 expr: expr ori . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 173
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 140
+
+   98 expr: expr slsh . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 174
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 141
+
+  100 expr: expr mod . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 175
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 142
+
+  107 expr: expr AND . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 176
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 143
+
+  108 expr: expr OR . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 177
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 144
+
+   78 statement: RETURN expr pnctvir .
+
+    $default  reduce using rule 78 (statement)
+
+
+State 145
+
+  101 expr: expr EQ . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 178
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 146
+
+  102 expr: expr NEQ . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 179
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 147
+
+  103 expr: expr LEQ . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 180
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 148
+
+  104 expr: expr GEQ . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 181
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 149
+
+  106 expr: expr GRE . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 182
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 150
+
+  105 expr: expr LES . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 183
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 151
+
+  112 expr3: sign ID .
+
+    $default  reduce using rule 112 (expr3)
+
+
+State 152
+
+   82 PRINTEGER: print sprnt INTEGER . vir expr dprnt
+
+    vir  shift, and go to state 184
+
+
+State 153
+
+   83 PRINTEGER: print sprnt CHR . vir expr dprnt
+
+    vir  shift, and go to state 185
+
+
+State 154
+
+   84 PRINTEGER: print sprnt FLOAT . vir expr dprnt
+
+    vir  shift, and go to state 186
+
+
+State 155
+
+   85 PRINTEGER: print sprnt BOOL . vir expr dprnt
+
+    vir  shift, and go to state 187
+
+
+State 156
+
+   15 struct_identif: struct_identif vir ID .
+
+    $default  reduce using rule 15 (struct_identif)
+
+
+State 157
+
+   16 struct_identif: struct_identif vir vect .
+
+    $default  reduce using rule 16 (struct_identif)
+
+
+State 158
+
+   17 struct_identif: struct_identif vir matr .
+
+    $default  reduce using rule 17 (struct_identif)
+
+
+State 159
+
+   56 arg_list: arg_list vir INTEGER . ID
+   60         | arg_list vir INTEGER . matr
+   64         | arg_list vir INTEGER . vect
+
+    ID    shift, and go to state 188
+    vect  shift, and go to state 189
+    matr  shift, and go to state 190
+
+
+State 160
+
+   58 arg_list: arg_list vir CHR . ID
+   62         | arg_list vir CHR . matr
+   66         | arg_list vir CHR . vect
+
+    ID    shift, and go to state 191
+    vect  shift, and go to state 192
+    matr  shift, and go to state 193
+
+
+State 161
+
+   57 arg_list: arg_list vir FLOAT . ID
+   61         | arg_list vir FLOAT . matr
+   65         | arg_list vir FLOAT . vect
+
+    ID    shift, and go to state 194
+    vect  shift, and go to state 195
+    matr  shift, and go to state 196
+
+
+State 162
+
+   59 arg_list: arg_list vir BOOL . ID
+   63         | arg_list vir BOOL . matr
+   67         | arg_list vir BOOL . vect
+
+    ID    shift, and go to state 197
+    vect  shift, and go to state 198
+    matr  shift, and go to state 199
+
+
+State 163
+
+   86 function: ID sprnt argum dprnt .
+
+    $default  reduce using rule 86 (function)
+
+
+State 164
+
+   88 argum: argum vir . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 200
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 165
+
+   81 val_struct: ID pnct ID ASSIGN . expr
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 201
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 166
+
+   90 if_stat: IF sprnt expr dprnt . bloc_stat
+   91        | IF sprnt expr dprnt . bloc_stat ELSE bloc_stat
+
+    ID      shift, and go to state 41
+    vect    shift, and go to state 42
+    matr    shift, and go to state 43
+    sacoal  shift, and go to state 202
+    IF      shift, and go to state 45
+    WHILE   shift, and go to state 46
+    FOR     shift, and go to state 47
+    RETURN  shift, and go to state 48
+    print   shift, and go to state 49
+
+    statement   go to state 203
+    val_struct  go to state 53
+    PRINTEGER   go to state 54
+    function    go to state 55
+    if_stat     go to state 56
+    for_stat    go to state 57
+    while_stat  go to state 58
+    bloc_stat   go to state 204
+    assign      go to state 59
+
+
+State 167
+
+   93 while_stat: WHILE sprnt expr dprnt . bloc_stat
+
+    ID      shift, and go to state 41
+    vect    shift, and go to state 42
+    matr    shift, and go to state 43
+    sacoal  shift, and go to state 202
+    IF      shift, and go to state 45
+    WHILE   shift, and go to state 46
+    FOR     shift, and go to state 47
+    RETURN  shift, and go to state 48
+    print   shift, and go to state 49
+
+    statement   go to state 203
+    val_struct  go to state 53
+    PRINTEGER   go to state 54
+    function    go to state 55
+    if_stat     go to state 56
+    for_stat    go to state 57
+    while_stat  go to state 58
+    bloc_stat   go to state 205
+    assign      go to state 59
+
+
+State 168
+
+   92 for_stat: FOR sprnt assign vir . expr vir assign dprnt bloc_stat
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 206
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 169
+
+  113 expr3: ID pnct ID .
+
+    $default  reduce using rule 113 (expr3)
+
+
+State 170
+
+  109 expr: sprnt expr dprnt .
+
+    $default  reduce using rule 109 (expr)
+
+
+State 171
+
+   96 expr: expr . pls expr
+   96     | expr pls expr .
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    ori   shift, and go to state 139
+    slsh  shift, and go to state 140
+    mod   shift, and go to state 141
+
+    $default  reduce using rule 96 (expr)
+
+
+State 172
+
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   97     | expr min expr .
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    ori   shift, and go to state 139
+    slsh  shift, and go to state 140
+    mod   shift, and go to state 141
+
+    $default  reduce using rule 97 (expr)
+
+
+State 173
+
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+   99     | expr ori expr .
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    $default  reduce using rule 99 (expr)
+
+
+State 174
+
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   98     | expr slsh expr .
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    $default  reduce using rule 98 (expr)
+
+
+State 175
+
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  100     | expr mod expr .
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    $default  reduce using rule 100 (expr)
+
+
+State 176
+
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  107     | expr AND expr .
+  108     | expr . OR expr
+
+    pls   shift, and go to state 137
+    min   shift, and go to state 138
+    ori   shift, and go to state 139
+    slsh  shift, and go to state 140
+    mod   shift, and go to state 141
+    EQ    shift, and go to state 145
+    NEQ   shift, and go to state 146
+    LEQ   shift, and go to state 147
+    GEQ   shift, and go to state 148
+    GRE   shift, and go to state 149
+    LES   shift, and go to state 150
+
+    $default  reduce using rule 107 (expr)
+
+
+State 177
+
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+  108     | expr OR expr .
+
+    pls   shift, and go to state 137
+    min   shift, and go to state 138
+    ori   shift, and go to state 139
+    slsh  shift, and go to state 140
+    mod   shift, and go to state 141
+    AND   shift, and go to state 142
+    EQ    shift, and go to state 145
+    NEQ   shift, and go to state 146
+    LEQ   shift, and go to state 147
+    GEQ   shift, and go to state 148
+    GRE   shift, and go to state 149
+    LES   shift, and go to state 150
+
+    $default  reduce using rule 108 (expr)
+
+
+State 178
+
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  101     | expr EQ expr .
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    pls   shift, and go to state 137
+    min   shift, and go to state 138
+    ori   shift, and go to state 139
+    slsh  shift, and go to state 140
+    mod   shift, and go to state 141
+
+    $default  reduce using rule 101 (expr)
+
+
+State 179
+
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  102     | expr NEQ expr .
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    pls   shift, and go to state 137
+    min   shift, and go to state 138
+    ori   shift, and go to state 139
+    slsh  shift, and go to state 140
+    mod   shift, and go to state 141
+
+    $default  reduce using rule 102 (expr)
+
+
+State 180
+
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  103     | expr LEQ expr .
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    pls   shift, and go to state 137
+    min   shift, and go to state 138
+    ori   shift, and go to state 139
+    slsh  shift, and go to state 140
+    mod   shift, and go to state 141
+
+    $default  reduce using rule 103 (expr)
+
+
+State 181
+
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  104     | expr GEQ expr .
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    pls   shift, and go to state 137
+    min   shift, and go to state 138
+    ori   shift, and go to state 139
+    slsh  shift, and go to state 140
+    mod   shift, and go to state 141
+
+    $default  reduce using rule 104 (expr)
+
+
+State 182
+
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  106     | expr GRE expr .
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    pls   shift, and go to state 137
+    min   shift, and go to state 138
+    ori   shift, and go to state 139
+    slsh  shift, and go to state 140
+    mod   shift, and go to state 141
+
+    $default  reduce using rule 106 (expr)
+
+
+State 183
+
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  105     | expr LES expr .
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    pls   shift, and go to state 137
+    min   shift, and go to state 138
+    ori   shift, and go to state 139
+    slsh  shift, and go to state 140
+    mod   shift, and go to state 141
+
+    $default  reduce using rule 105 (expr)
+
+
+State 184
+
+   82 PRINTEGER: print sprnt INTEGER vir . expr dprnt
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 207
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 185
+
+   83 PRINTEGER: print sprnt CHR vir . expr dprnt
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 208
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 186
+
+   84 PRINTEGER: print sprnt FLOAT vir . expr dprnt
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 209
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 187
+
+   85 PRINTEGER: print sprnt BOOL vir . expr dprnt
+
+    ID           shift, and go to state 84
+    vect         shift, and go to state 85
+    matr         shift, and go to state 86
+    min          shift, and go to state 87
+    sprnt        shift, and go to state 88
+    INTEGER_VAL  shift, and go to state 89
+    FLOAT_VAL    shift, and go to state 90
+    CHR_VAL      shift, and go to state 91
+    BOOL_VAL     shift, and go to state 92
+
+    expr   go to state 210
+    expr3  go to state 94
+    sign   go to state 95
+
+
+State 188
+
+   56 arg_list: arg_list vir INTEGER ID .
+
+    $default  reduce using rule 56 (arg_list)
+
+
+State 189
+
+   64 arg_list: arg_list vir INTEGER vect .
+
+    $default  reduce using rule 64 (arg_list)
+
+
+State 190
+
+   60 arg_list: arg_list vir INTEGER matr .
+
+    $default  reduce using rule 60 (arg_list)
+
+
+State 191
+
+   58 arg_list: arg_list vir CHR ID .
+
+    $default  reduce using rule 58 (arg_list)
+
+
+State 192
+
+   66 arg_list: arg_list vir CHR vect .
+
+    $default  reduce using rule 66 (arg_list)
+
+
+State 193
+
+   62 arg_list: arg_list vir CHR matr .
+
+    $default  reduce using rule 62 (arg_list)
+
+
+State 194
+
+   57 arg_list: arg_list vir FLOAT ID .
+
+    $default  reduce using rule 57 (arg_list)
+
+
+State 195
+
+   65 arg_list: arg_list vir FLOAT vect .
+
+    $default  reduce using rule 65 (arg_list)
+
+
+State 196
+
+   61 arg_list: arg_list vir FLOAT matr .
+
+    $default  reduce using rule 61 (arg_list)
+
+
+State 197
+
+   59 arg_list: arg_list vir BOOL ID .
+
+    $default  reduce using rule 59 (arg_list)
+
+
+State 198
+
+   67 arg_list: arg_list vir BOOL vect .
+
+    $default  reduce using rule 67 (arg_list)
+
+
+State 199
+
+   63 arg_list: arg_list vir BOOL matr .
+
+    $default  reduce using rule 63 (arg_list)
+
+
+State 200
+
+   88 argum: argum vir expr .
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    pls   shift, and go to state 137
+    min   shift, and go to state 138
+    ori   shift, and go to state 139
+    slsh  shift, and go to state 140
+    mod   shift, and go to state 141
+    AND   shift, and go to state 142
+    OR    shift, and go to state 143
+    EQ    shift, and go to state 145
+    NEQ   shift, and go to state 146
+    LEQ   shift, and go to state 147
+    GEQ   shift, and go to state 148
+    GRE   shift, and go to state 149
+    LES   shift, and go to state 150
+
+    $default  reduce using rule 88 (argum)
+
+
+State 201
+
+   81 val_struct: ID pnct ID ASSIGN expr .
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    pls   shift, and go to state 137
+    min   shift, and go to state 138
+    ori   shift, and go to state 139
+    slsh  shift, and go to state 140
+    mod   shift, and go to state 141
+    AND   shift, and go to state 142
+    OR    shift, and go to state 143
+    EQ    shift, and go to state 145
+    NEQ   shift, and go to state 146
+    LEQ   shift, and go to state 147
+    GEQ   shift, and go to state 148
+    GRE   shift, and go to state 149
+    LES   shift, and go to state 150
+
+    $default  reduce using rule 81 (val_struct)
+
+
+State 202
+
+   95 bloc_stat: sacoal . statements dacoal
+
+    ID      shift, and go to state 41
+    vect    shift, and go to state 42
+    matr    shift, and go to state 43
+    IF      shift, and go to state 45
+    WHILE   shift, and go to state 46
+    FOR     shift, and go to state 47
+    RETURN  shift, and go to state 48
+    print   shift, and go to state 49
+
+    statements  go to state 211
+    statement   go to state 52
+    val_struct  go to state 53
+    PRINTEGER   go to state 54
+    function    go to state 55
+    if_stat     go to state 56
+    for_stat    go to state 57
+    while_stat  go to state 58
+    assign      go to state 59
+
+
+State 203
+
+   94 bloc_stat: statement .
+
+    $default  reduce using rule 94 (bloc_stat)
+
+
+State 204
+
+   90 if_stat: IF sprnt expr dprnt bloc_stat .
+   91        | IF sprnt expr dprnt bloc_stat . ELSE bloc_stat
+
+    ELSE  shift, and go to state 212
+
+    $default  reduce using rule 90 (if_stat)
+
+
+State 205
+
+   93 while_stat: WHILE sprnt expr dprnt bloc_stat .
+
+    $default  reduce using rule 93 (while_stat)
+
+
+State 206
+
+   92 for_stat: FOR sprnt assign vir expr . vir assign dprnt bloc_stat
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    pls   shift, and go to state 137
+    min   shift, and go to state 138
+    ori   shift, and go to state 139
+    slsh  shift, and go to state 140
+    mod   shift, and go to state 141
+    AND   shift, and go to state 142
+    OR    shift, and go to state 143
+    vir   shift, and go to state 213
+    EQ    shift, and go to state 145
+    NEQ   shift, and go to state 146
+    LEQ   shift, and go to state 147
+    GEQ   shift, and go to state 148
+    GRE   shift, and go to state 149
+    LES   shift, and go to state 150
+
+
+State 207
+
+   82 PRINTEGER: print sprnt INTEGER vir expr . dprnt
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    pls    shift, and go to state 137
+    min    shift, and go to state 138
+    ori    shift, and go to state 139
+    slsh   shift, and go to state 140
+    mod    shift, and go to state 141
+    AND    shift, and go to state 142
+    OR     shift, and go to state 143
+    dprnt  shift, and go to state 214
+    EQ     shift, and go to state 145
+    NEQ    shift, and go to state 146
+    LEQ    shift, and go to state 147
+    GEQ    shift, and go to state 148
+    GRE    shift, and go to state 149
+    LES    shift, and go to state 150
+
+
+State 208
+
+   83 PRINTEGER: print sprnt CHR vir expr . dprnt
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    pls    shift, and go to state 137
+    min    shift, and go to state 138
+    ori    shift, and go to state 139
+    slsh   shift, and go to state 140
+    mod    shift, and go to state 141
+    AND    shift, and go to state 142
+    OR     shift, and go to state 143
+    dprnt  shift, and go to state 215
+    EQ     shift, and go to state 145
+    NEQ    shift, and go to state 146
+    LEQ    shift, and go to state 147
+    GEQ    shift, and go to state 148
+    GRE    shift, and go to state 149
+    LES    shift, and go to state 150
+
+
+State 209
+
+   84 PRINTEGER: print sprnt FLOAT vir expr . dprnt
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    pls    shift, and go to state 137
+    min    shift, and go to state 138
+    ori    shift, and go to state 139
+    slsh   shift, and go to state 140
+    mod    shift, and go to state 141
+    AND    shift, and go to state 142
+    OR     shift, and go to state 143
+    dprnt  shift, and go to state 216
+    EQ     shift, and go to state 145
+    NEQ    shift, and go to state 146
+    LEQ    shift, and go to state 147
+    GEQ    shift, and go to state 148
+    GRE    shift, and go to state 149
+    LES    shift, and go to state 150
+
+
+State 210
+
+   85 PRINTEGER: print sprnt BOOL vir expr . dprnt
+   96 expr: expr . pls expr
+   97     | expr . min expr
+   98     | expr . slsh expr
+   99     | expr . ori expr
+  100     | expr . mod expr
+  101     | expr . EQ expr
+  102     | expr . NEQ expr
+  103     | expr . LEQ expr
+  104     | expr . GEQ expr
+  105     | expr . LES expr
+  106     | expr . GRE expr
+  107     | expr . AND expr
+  108     | expr . OR expr
+
+    pls    shift, and go to state 137
+    min    shift, and go to state 138
+    ori    shift, and go to state 139
+    slsh   shift, and go to state 140
+    mod    shift, and go to state 141
+    AND    shift, and go to state 142
+    OR     shift, and go to state 143
+    dprnt  shift, and go to state 217
+    EQ     shift, and go to state 145
+    NEQ    shift, and go to state 146
+    LEQ    shift, and go to state 147
+    GEQ    shift, and go to state 148
+    GRE    shift, and go to state 149
+    LES    shift, and go to state 150
+
+
+State 211
+
+   71 statements: statements . statement
+   95 bloc_stat: sacoal statements . dacoal
+
+    ID      shift, and go to state 41
+    vect    shift, and go to state 42
+    matr    shift, and go to state 43
+    dacoal  shift, and go to state 218
+    IF      shift, and go to state 45
+    WHILE   shift, and go to state 46
+    FOR     shift, and go to state 47
+    RETURN  shift, and go to state 48
+    print   shift, and go to state 49
+
+    statement   go to state 98
+    val_struct  go to state 53
+    PRINTEGER   go to state 54
+    function    go to state 55
+    if_stat     go to state 56
+    for_stat    go to state 57
+    while_stat  go to state 58
+    assign      go to state 59
+
+
+State 212
+
+   91 if_stat: IF sprnt expr dprnt bloc_stat ELSE . bloc_stat
+
+    ID      shift, and go to state 41
+    vect    shift, and go to state 42
+    matr    shift, and go to state 43
+    sacoal  shift, and go to state 202
+    IF      shift, and go to state 45
+    WHILE   shift, and go to state 46
+    FOR     shift, and go to state 47
+    RETURN  shift, and go to state 48
+    print   shift, and go to state 49
+
+    statement   go to state 203
+    val_struct  go to state 53
+    PRINTEGER   go to state 54
+    function    go to state 55
+    if_stat     go to state 56
+    for_stat    go to state 57
+    while_stat  go to state 58
+    bloc_stat   go to state 219
+    assign      go to state 59
+
+
+State 213
+
+   92 for_stat: FOR sprnt assign vir expr vir . assign dprnt bloc_stat
+
+    ID    shift, and go to state 133
+    vect  shift, and go to state 42
+    matr  shift, and go to state 43
+
+    assign  go to state 220
+
+
+State 214
+
+   82 PRINTEGER: print sprnt INTEGER vir expr dprnt .
+
+    $default  reduce using rule 82 (PRINTEGER)
+
+
+State 215
+
+   83 PRINTEGER: print sprnt CHR vir expr dprnt .
+
+    $default  reduce using rule 83 (PRINTEGER)
+
+
+State 216
+
+   84 PRINTEGER: print sprnt FLOAT vir expr dprnt .
+
+    $default  reduce using rule 84 (PRINTEGER)
+
+
+State 217
+
+   85 PRINTEGER: print sprnt BOOL vir expr dprnt .
+
+    $default  reduce using rule 85 (PRINTEGER)
+
+
+State 218
+
+   95 bloc_stat: sacoal statements dacoal .
+
+    $default  reduce using rule 95 (bloc_stat)
+
+
+State 219
+
+   91 if_stat: IF sprnt expr dprnt bloc_stat ELSE bloc_stat .
+
+    $default  reduce using rule 91 (if_stat)
+
+
+State 220
+
+   92 for_stat: FOR sprnt assign vir expr vir assign . dprnt bloc_stat
+
+    dprnt  shift, and go to state 221
+
+
+State 221
+
+   92 for_stat: FOR sprnt assign vir expr vir assign dprnt . bloc_stat
+
+    ID      shift, and go to state 41
+    vect    shift, and go to state 42
+    matr    shift, and go to state 43
+    sacoal  shift, and go to state 202
+    IF      shift, and go to state 45
+    WHILE   shift, and go to state 46
+    FOR     shift, and go to state 47
+    RETURN  shift, and go to state 48
+    print   shift, and go to state 49
+
+    statement   go to state 203
+    val_struct  go to state 53
+    PRINTEGER   go to state 54
+    function    go to state 55
+    if_stat     go to state 56
+    for_stat    go to state 57
+    while_stat  go to state 58
+    bloc_stat   go to state 222
+    assign      go to state 59
+
+
+State 222
+
+   92 for_stat: FOR sprnt assign vir expr vir assign dprnt bloc_stat .
+
+    $default  reduce using rule 92 (for_stat)

@@ -1,0 +1,17 @@
+global int a = 43
+global int bs55 = 4
+global vector int v[10] 
+global float te = 15.000000
+global matrice int mm[10][100] 
+global char myC = '^'
+global_struct  Ma 
+var_inside_struct int x = 3
+var_inside_struct int y = 5
+struct_inside_struct  alt 
+var_inside_struct char other = '*'
+struct_var struct var2 
+struct_function bool myF 
+struct_var struct var 
+global_function int Fa 
+funct_arg int asd 
+global int b = 40

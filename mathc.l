@@ -1,37 +1,71 @@
 %{
 #include <stdio.h>
-#include <stdlib.h> 
-#include <string.h> 
+#include <string.h>
 #include "y.tab.h"
-#include "libs/mylib.h"
-void yyerror(char *);
 %}
 
-%option yylineno
 
 %%
-"int"|"float"|"string" {return DATA_TYPE;}
-"{" {return START;}
-"}" {return END;}
-"main" {return MAIN;}
-"return" {return RETURN;}
-"for" {return FOR;}
-"efor" {return EFOR;}
-"while" {return WHILE;}
-"ewhile" {return EWHILE;}
-"if" {return IF;}
-"else" {return ELSE;}
-"fi" {return FI;}
-"print" {return PRINT;}
 
-[_a-zA-Z][_a-zA-Z0-9]* {yylval.sPtr=strdup(yytext); return VARIABLE;}
-[_a-zA-Z][_a-zA-Z0-9]*\[[1-9][0-9]*\] {yylval.sPtr=strdup(yytext); return ARRAY;}
-[0-9]+ {yylval.iVal=atoi(yytext); return NUMBER;}
-\"[^\"]*\" {yylval.sPtr=strdup(yytext); return STRING;}
-"TRUE"|"FALSE" {yylval.iVal=parse_bool(yytext); return BOOL;}
+"begin" { return start_decl;}
+"enddefines" { return end_defines;}
+"end" { return end_instr;}
 
-[ \n] {}
+"INT" { return INTEGER;}
+"CHAR" { return CHR;}
+"FLOAT" { return FLOAT;}
+"BL" { return BOOL;}
+"CONST" { return CONST;}
+
+
+"STRUCT" { return STRUCT;}
+
+"PRINT" { return print;}
+"FOR" { return FOR;}
+"IF" { return IF;}
+"ELSE" { return ELSE;}
+"WHILE" { return WHILE;}
+"RETURN" { return RETURN;}
+
+"TRUE"|"FALSE" { yylval.val=atoi(yytext); return BOOL_VAL;}
+\'[\^\-\\!@#$%^&*()+~`?=_{};:'"|/.,><a-zA-Z0-9]\' { yylval.val=yytext[1]; return CHR_VAL;}
+[0-9]+ { yylval.val=atoi(yytext); return INTEGER_VAL;}
+[0-9]*\.?[0-9]+ { yylval.val=atof(yytext); return FLOAT_VAL;}
+
+
+[A-Za-z][a-zA-Z0-9_]* { yylval.nume=strdup(yytext); return ID;}
+[A-Za-z][a-zA-Z0-9_]*\[[1-9][0-9]*\]\[[1-9][0-9]*\] {{ yylval.nume=strdup(yytext); return matr;}}
+[A-Za-z][a-zA-Z0-9_]*"["[0-9]*"]" {{ yylval.nume=strdup(yytext); return vect;}}
+
+
+
+"+" {return pls;}
+"-" { return min;}
+"*" { return ori;}
+"\\" { return slsh;}
+"%" { return mod;}
+"&&" { return AND;}
+"||" { return OR;}
+"==" { return EQ;}
+"!=" { return NEQ;}
+">"  { return GRE;}
+"<"  { return LES;}
+">=" { return GEQ;}
+"<=" { return LEQ;}
+"=" { return ASSIGN;}
+"!" { return NOT;}
+"(" { return sprnt;}
+")" { return dprnt;}
+"{" { return sacoal;}
+"}" { return dacoal;}
+"." { return pnct;}
+"," { return vir;}
+";" { return pnctvir;}
+
+
 [ \t] ;
-. {return yytext[0];}
+\n {;}
+. {printf("%s \n",yytext); return yytext[0];}
 
 %%
+

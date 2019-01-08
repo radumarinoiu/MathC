@@ -45,58 +45,113 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    DATA_TYPE = 258,
-    START = 259,
-    END = 260,
-    MAIN = 261,
-    RETURN = 262,
-    FOR = 263,
-    EFOR = 264,
-    WHILE = 265,
-    EWHILE = 266,
-    IF = 267,
-    ELSE = 268,
-    FI = 269,
-    PRINT = 270,
-    VARIABLE = 271,
-    ARRAY = 272,
-    NUMBER = 273,
-    STRING = 274,
-    expression = 275
+    IFX = 258,
+    ELSE = 259,
+    start_decl = 260,
+    INTEGER = 261,
+    CHR = 262,
+    FLOAT = 263,
+    BOOL = 264,
+    ID = 265,
+    vect = 266,
+    matr = 267,
+    STRUCT = 268,
+    CONST = 269,
+    pls = 270,
+    min = 271,
+    ori = 272,
+    slsh = 273,
+    verf = 274,
+    mod = 275,
+    ASSIGN = 276,
+    AND = 277,
+    OR = 278,
+    INCR = 279,
+    NOT = 280,
+    sprnt = 281,
+    dprnt = 282,
+    sacoal = 283,
+    dacoal = 284,
+    pnct = 285,
+    vir = 286,
+    pnctvir = 287,
+    end_defines = 288,
+    end_instr = 289,
+    IF = 290,
+    WHILE = 291,
+    FOR = 292,
+    RETURN = 293,
+    print = 294,
+    INTEGER_VAL = 295,
+    FLOAT_VAL = 296,
+    CHR_VAL = 297,
+    BOOL_VAL = 298,
+    EQ = 299,
+    NEQ = 300,
+    LEQ = 301,
+    GEQ = 302,
+    GRE = 303,
+    LES = 304
   };
 #endif
 /* Tokens.  */
-#define DATA_TYPE 258
-#define START 259
-#define END 260
-#define MAIN 261
-#define RETURN 262
-#define FOR 263
-#define EFOR 264
-#define WHILE 265
-#define EWHILE 266
-#define IF 267
-#define ELSE 268
-#define FI 269
-#define PRINT 270
-#define VARIABLE 271
-#define ARRAY 272
-#define NUMBER 273
-#define STRING 274
-#define expression 275
+#define IFX 258
+#define ELSE 259
+#define start_decl 260
+#define INTEGER 261
+#define CHR 262
+#define FLOAT 263
+#define BOOL 264
+#define ID 265
+#define vect 266
+#define matr 267
+#define STRUCT 268
+#define CONST 269
+#define pls 270
+#define min 271
+#define ori 272
+#define slsh 273
+#define verf 274
+#define mod 275
+#define ASSIGN 276
+#define AND 277
+#define OR 278
+#define INCR 279
+#define NOT 280
+#define sprnt 281
+#define dprnt 282
+#define sacoal 283
+#define dacoal 284
+#define pnct 285
+#define vir 286
+#define pnctvir 287
+#define end_defines 288
+#define end_instr 289
+#define IF 290
+#define WHILE 291
+#define FOR 292
+#define RETURN 293
+#define print 294
+#define INTEGER_VAL 295
+#define FLOAT_VAL 296
+#define CHR_VAL 297
+#define BOOL_VAL 298
+#define EQ 299
+#define NEQ 300
+#define LEQ 301
+#define GEQ 302
+#define GRE 303
+#define LES 304
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 13 "mathc.y" /* yacc.c:1909  */
+#line 17 "mathc.y" /* yacc.c:1909  */
+int val; char val_ch; char *nume; 
 
-     int iVal;
-     float fVal;
-     char* sPtr;
-
-#line 100 "y.tab.h" /* yacc.c:1909  */
+#line 155 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -1,5 +1,42 @@
-{
-int a[10]
-int b
-"TEST"
+begin
+
+INT a=3;
+INT bs55=4;
+INT v[10];
+FLOAT te=15.25;
+INT mm[10][100];
+CHAR myC='^';
+STRUCT Ma{
+    INT x;
+    INT y;
+    STRUCT alt{
+        CHAR other='*';
+    }var2;
+    BL myF(){
+        x=3;
+        y=5;
+    }    
+
+}var;
+
+INT Fa(INT asd){
+    a=12;
 }
+INT b=5;
+
+enddefines
+
+a=4;
+IF(a<=5){
+    b=40;
+    a=4-1+b;
+}
+PRINT(INT,a);
+WHILE(1==1){
+    PRINT(CHAR,';');
+}
+Fa(a);
+PRINT(INT,bs55);
+PRINT(FLOAT,te);
+RETURN 0;
+end
